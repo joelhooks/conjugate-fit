@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { ChevronDown, ChevronUp, Dumbbell, TrendingUp } from "lucide-react"
+import { ChevronDown, ChevronUp, TrendingUp } from "lucide-react"
 import { progressionSchemes } from "@/lib/progression-utils"
 import type { CalculatorHistoryEntry } from "@/lib/stores/types"
 import { hasItems, safeLength } from "@/lib/utils/array-utils"
@@ -75,16 +75,14 @@ export default function CalculatorHistory({
                   <CardContent className="p-3">
                     <div className="flex justify-between items-center">
                       <div className="flex items-center">
-                        {entry?.type === "1rm" && <TrendingUp size={18} className="mr-1" />}
-                        {entry?.type === "uniform" && <Dumbbell size={18} className="mr-1" />}
-                        <span className="font-bold">{entry?.type === "1rm" ? "1RM" : "Uniform"}</span>
+                        <TrendingUp size={18} className="mr-1" />
+                        <span className="font-bold">1RM</span>
                       </div>
                       <span className="text-xs text-gray-400">{entry?.date || "Unknown date"}</span>
                     </div>
                     <div className="mt-2 text-lg">
                       {entry?.sets || 0}×{entry?.reps || 0} @ {entry?.baseWeight || 0}lbs
-                      {entry?.type === "1rm" &&
-                        entry?.scheme &&
+                      {entry?.scheme &&
                         progressionSchemes[entry.scheme] &&
                         ` (${progressionSchemes[entry.scheme].algorithmName})`}
                     </div>

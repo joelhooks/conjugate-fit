@@ -142,7 +142,7 @@ export default function CalculatorResultsWithTimer({
               onSelectInterval={handleSelectInterval}
               selectedPattern={timingPattern}
               onSelectPattern={handleSelectPattern}
-              calculationMode={calculator?.mode}
+              
             />
           ) : (
             restInterval && (
