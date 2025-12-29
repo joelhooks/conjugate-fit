@@ -1,0 +1,478 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Space Grotesk", sans-serif;
+  --font-mono: "Space Mono", monospace;
+
+  /* Tailwind v4 colors - use hsl() for compatibility with existing code */
+  --color-background: hsl(0 0% 2%);
+  --color-foreground: hsl(0 0% 98%);
+  --color-card: hsl(0 0% 5%);
+  --color-card-foreground: hsl(0 0% 98%);
+  --color-popover: hsl(0 0% 5%);
+  --color-popover-foreground: hsl(0 0% 98%);
+
+  /* Hot Pink Primary */
+  --color-primary: hsl(325 100% 60%);
+  --color-primary-foreground: hsl(0 0% 98%);
+
+  /* Purple Secondary */
+  --color-secondary: hsl(260 100% 60%);
+  --color-secondary-foreground: hsl(0 0% 98%);
+
+  /* Cyan Accent */
+  --color-accent: hsl(190 100% 50%);
+  --color-accent-foreground: hsl(0 0% 2%);
+
+  --color-muted: hsl(0 0% 15%);
+  --color-muted-foreground: hsl(0 0% 65%);
+  --color-destructive: hsl(0 85% 60%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+  --color-border: hsl(0 0% 20%);
+  --color-input: hsl(0 0% 15%);
+  --color-ring: hsl(325 100% 60%);
+
+  /* Chart colors - Memphis palette */
+  --color-chart-1: hsl(325 100% 60%);
+  --color-chart-2: hsl(190 100% 50%);
+  --color-chart-3: hsl(260 100% 60%);
+  --color-chart-4: hsl(45 100% 60%);
+  --color-chart-5: hsl(145 80% 45%);
+
+  /* Sidebar */
+  --color-sidebar: hsl(0 0% 2%);
+  --color-sidebar-foreground: hsl(0 0% 98%);
+  --color-sidebar-primary: hsl(325 100% 60%);
+  --color-sidebar-primary-foreground: hsl(0 0% 98%);
+  --color-sidebar-accent: hsl(0 0% 10%);
+  --color-sidebar-accent-foreground: hsl(0 0% 98%);
+  --color-sidebar-border: hsl(0 0% 18%);
+  --color-sidebar-ring: hsl(325 100% 60%);
+
+  /* Memphis custom colors for utility classes */
+  --color-memphis-pink: hsl(325 100% 60%);
+  --color-memphis-purple: hsl(260 100% 60%);
+  --color-memphis-cyan: hsl(190 100% 50%);
+  --color-memphis-yellow: hsl(45 100% 60%);
+  --color-memphis-green: hsl(145 80% 45%);
+
+  /* Radius - brutalist = no radius */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+/* CSS variables for hsl(var(--name)) pattern used in components */
+:root {
+  /* Raw HSL values (no hsl() wrapper) for use with hsl(var(--name)) syntax */
+  --primary: 325 100% 60%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 260 100% 60%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 190 100% 50%;
+  --accent-foreground: 0 0% 2%;
+  --background: 0 0% 2%;
+  --foreground: 0 0% 98%;
+  --card: 0 0% 5%;
+  --card-foreground: 0 0% 98%;
+  --popover: 0 0% 5%;
+  --popover-foreground: 0 0% 98%;
+  --muted: 0 0% 15%;
+  --muted-foreground: 0 0% 65%;
+  --destructive: 0 85% 60%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 20%;
+  --input: 0 0% 15%;
+  --ring: 325 100% 60%;
+
+  /* Sidebar */
+  --sidebar-background: 0 0% 2%;
+  --sidebar-foreground: 0 0% 98%;
+  --sidebar-primary: 325 100% 60%;
+  --sidebar-primary-foreground: 0 0% 98%;
+  --sidebar-accent: 0 0% 10%;
+  --sidebar-accent-foreground: 0 0% 98%;
+  --sidebar-border: 0 0% 18%;
+  --sidebar-ring: 325 100% 60%;
+
+  /* Memphis colors for direct use */
+  --memphis-pink: 325 100% 60%;
+  --memphis-purple: 260 100% 60%;
+  --memphis-cyan: 190 100% 50%;
+  --memphis-yellow: 45 100% 60%;
+  --memphis-green: 145 80% 45%;
+
+  /* Font variables */
+  --font-archivo-black: "Archivo Black", sans-serif;
+  --font-space-grotesk: "Space Grotesk", sans-serif;
+  --font-space-mono: "Space Mono", monospace;
+
+  /* Radius */
+  --radius: 0px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Space Grotesk", sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  /* Brutalist Memphis Typography */
+  h1,
+  h2,
+  h3,
+  h4,
+  .display-text {
+    font-family: "Archivo Black", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+  }
+
+  /* Monospace for numbers and technical information */
+  .mono,
+  .numeric,
+  input[type="number"],
+  input[type="text"][inputmode="numeric"] {
+    font-family: "Space Mono", monospace;
+    letter-spacing: -0.03em;
+  }
+}
+
+/* Add these styles to prevent horizontal overflow */
+html,
+body {
+  overflow-x: hidden;
+  position: relative;
+  width: 100%;
+}
+
+/* Typography Scale */
+h1 {
+  @apply text-4xl md:text-5xl font-bold;
+  margin-bottom: 0.5em;
+}
+
+h2 {
+  @apply text-3xl md:text-4xl font-bold;
+  margin-bottom: 0.5em;
+}
+
+h3 {
+  @apply text-2xl md:text-3xl font-bold;
+  margin-bottom: 0.5em;
+}
+
+h4 {
+  @apply text-xl md:text-2xl font-bold;
+  margin-bottom: 0.5em;
+}
+
+p {
+  @apply text-lg;
+  margin-bottom: 1em;
+}
+
+/* Memphis-style text decorations */
+.text-outline {
+  -webkit-text-stroke: 1px white;
+  color: transparent;
+}
+
+.text-shadow {
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+}
+
+.text-skew {
+  transform: skewX(-5deg);
+}
+
+.text-rotate {
+  transform: rotate(-2deg);
+}
+
+/* Brutalist button styles */
+.btn-brutalist {
+  @apply border-2 border-white bg-black text-white font-bold uppercase;
+  font-family: "Archivo Black", sans-serif;
+  letter-spacing: 0.05em;
+  transform: skewX(-5deg);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-brutalist:hover {
+  transform: skewX(-5deg) scale(1.05);
+}
+
+.btn-brutalist:active {
+  transform: skewX(-5deg) scale(0.98);
+}
+
+/* Brutalist input styles */
+.input-brutalist {
+  @apply border-2 border-white bg-black text-white font-bold;
+  font-family: "Space Mono", monospace;
+}
+
+/* Make inputs and buttons larger and more touch-friendly */
+input,
+button {
+  @apply text-lg;
+  max-width: 100%;
+}
+
+/* Ensure checkboxes are large enough to tap easily */
+input[type="checkbox"] {
+  @apply w-6 h-6;
+  appearance: none;
+  border: 2px solid hsl(325 100% 60%);
+  background-color: black;
+  position: relative;
+}
+
+input[type="checkbox"]:checked::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: hsl(325 100% 60%);
+  font-size: 1rem;
+}
+
+/* Ensure number inputs don't show spinner arrows */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Prevent overflow */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* Ensure content fits within viewport */
+.min-h-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure main content area can scroll if needed */
+main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Brutalist card styles */
+.card-brutalist {
+  @apply border-2 border-white bg-black p-4;
+  position: relative;
+}
+
+.card-brutalist::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 15px;
+  height: 15px;
+  background-color: hsl(190 100% 50%);
+  z-index: -1;
+}
+
+/* Memphis-style badge */
+.badge-memphis {
+  @apply font-bold uppercase px-2 py-1;
+  background: hsl(325 100% 60%);
+  color: white;
+  position: relative;
+  font-family: "Archivo Black", sans-serif;
+}
+
+.badge-memphis::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  width: 10px;
+  height: 10px;
+  background-color: hsl(190 100% 50%);
+}
+
+/* Compact set display for better vertical space usage */
+.set-compact {
+  @apply flex justify-between items-center border-b border-gray-800 py-2;
+}
+
+.set-compact:last-child {
+  @apply border-b-0;
+}
+
+/* Memphis-style divider */
+.memphis-divider {
+  height: 3px;
+  background: linear-gradient(90deg, hsl(325 100% 60%), hsl(190 100% 50%));
+  margin: 1rem 0;
+  position: relative;
+}
+
+.memphis-divider::before {
+  content: "";
+  position: absolute;
+  left: 30%;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  background-color: hsl(260 100% 60%);
+  transform: rotate(45deg);
+}
+
+/* Minimal divider */
+.minimal-divider {
+  height: 2px;
+  background: hsl(325 100% 60%);
+  margin: 0.5rem 0;
+}
+
+/* Memphis pattern background */
+.memphis-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.memphis-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle at 10% 20%, hsl(325 100% 60% / 10%) 1px, transparent 1px),
+    radial-gradient(circle at 80% 60%, hsl(190 100% 50% / 10%) 2px, transparent 2px),
+    radial-gradient(circle at 40% 80%, hsl(260 100% 60% / 10%) 1.5px, transparent 1.5px);
+  background-size: 60px 60px;
+  z-index: -1;
+}
+
+/* Animation utilities */
+.delay-100 {
+  animation-delay: 100ms;
+}
+
+.delay-200 {
+  animation-delay: 200ms;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Memphis-style animations */
+@keyframes memphisPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+@keyframes memphisFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes memphisRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes memphisZigZag {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+}
+
+/* Add animation for the loading text */
+@keyframes memphisTextPulse {
+  0%,
+  100% {
+    letter-spacing: normal;
+  }
+  50% {
+    letter-spacing: 0.2em;
+  }
+}
+
+/* Add animation for progress bar */
+@keyframes memphisProgress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-memphis-pulse {
+  animation: memphisPulse 2s infinite;
+}
+
+.animate-memphis-float {
+  animation: memphisFloat 3s ease-in-out infinite;
+}
+
+.animate-memphis-rotate {
+  animation: memphisRotate 8s linear infinite;
+}
+
+.animate-memphis-zigzag {
+  animation: memphisZigZag 1.5s ease-in-out infinite;
+}
+
+.animate-memphis-text-pulse {
+  animation: memphisTextPulse 2s ease-in-out infinite;
+}
+
+.animate-memphis-progress {
+  animation: memphisProgress 2s linear;
+}
