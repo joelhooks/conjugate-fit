@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 
 import SimplifiedPlateVisualizer from "../simplified-plate-visualizer";
 import { useCalculatorState } from "@/lib/stores/calculator-store";
-import { hasItems } from "@/lib/utils/array-utils";
 import {
   type RestInterval,
   type TimingPattern,
@@ -108,7 +107,7 @@ export default function CalculatorResultsWithTimer({
 
       <div className="mt-8 min-h-[200px]">
         {/* Zoom button */}
-        {hasItems(safeWeights) && (
+        {safeWeights.length > 0 && (
           <div className="flex justify-end mb-3">
             <button
               type="button"
@@ -121,7 +120,7 @@ export default function CalculatorResultsWithTimer({
           </div>
         )}
 
-        {hasItems(safeWeights) ? (
+        {safeWeights.length > 0 ? (
           <div className="grid grid-cols-1 gap-2">
             {safeWeights.map((weight, index) => {
               // Get percentage display if available

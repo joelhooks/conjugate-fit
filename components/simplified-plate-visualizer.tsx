@@ -12,7 +12,6 @@ import {
   useSelectedPlates,
   usePlateQuantities,
 } from "@/lib/stores/settings-store";
-import { errorTracker, ErrorCategory } from "@/lib/error-tracking";
 
 interface SimplifiedPlateVisualizerProps {
   weight: number;
@@ -42,18 +41,6 @@ export default function SimplifiedPlateVisualizer({
 
   const plates = useMemo(() => {
     try {
-      errorTracker.debug(ErrorCategory.CALCULATION, "Calculating plates", {
-        component: "SimplifiedPlateVisualizer",
-        action: "useMemo",
-        inputs: {
-          safeWeight,
-          barWeight,
-          includeSmallPlates,
-          selectedPlates,
-          plateQuantities,
-        },
-      });
-
       const weightPerSide = Math.max(0, (safeWeight - barWeight) / 2);
       const platesNeeded: Record<number, number> = {};
       let remainingWeight = weightPerSide;
@@ -62,15 +49,6 @@ export default function SimplifiedPlateVisualizer({
       const filteredPlates = includeSmallPlates
         ? availablePlates
         : availablePlates.filter((plate) => plate > 2.5);
-
-      errorTracker.debug(ErrorCategory.CALCULATION, "Available plates", {
-        component: "SimplifiedPlateVisualizer",
-        action: "useMemo",
-        state: {
-          availablePlatesLength: filteredPlates.length,
-          weightPerSide,
-        },
-      });
 
       for (const plate of filteredPlates) {
         const maxAvailable = plateQuantities[plate] ?? Number.POSITIVE_INFINITY;
@@ -85,12 +63,7 @@ export default function SimplifiedPlateVisualizer({
 
       return platesNeeded;
     } catch (error) {
-      errorTracker.trackError(ErrorCategory.CALCULATION, error as Error, {
-        component: "SimplifiedPlateVisualizer",
-        action: "useMemo",
-        message: "Error calculating plates",
-        inputs: { safeWeight, barWeight, includeSmallPlates },
-      });
+      console.error("Error calculating plates:", error);
       return {};
     }
   }, [

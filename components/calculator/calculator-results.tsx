@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { RotateCcw } from "lucide-react";
 import SimplifiedPlateVisualizer from "../simplified-plate-visualizer";
 import { useCalculatorState } from "@/lib/stores/calculator-store";
-import { hasItems } from "@/lib/utils/array-utils";
 
 interface CalculatorResultsProps {
   onReset: () => void;
@@ -20,7 +19,7 @@ export default function CalculatorResults({ onReset }: CalculatorResultsProps) {
   // Ensure calculatedWeights is an array, even if it's undefined
   const safeWeights = Array.isArray(calculatedWeights) ? calculatedWeights : [];
 
-  if (!hasItems(safeWeights)) return null;
+  if (safeWeights.length === 0) return null;
 
   return (
     <div className="mt-8 pt-6 border-t border-gray-700">

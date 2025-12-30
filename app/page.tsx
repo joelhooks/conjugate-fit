@@ -2,21 +2,14 @@
 
 import { useEffect, useState } from "react";
 import WeightCalculatorHome from "@/components/weight-calculator-home";
-import { enablePersistence } from "@/lib/stores/persistence";
 import ErrorBoundary from "@/components/error-boundary";
-import {
-  clearAllAppData,
-  handleServiceWorkerIssues,
-} from "@/lib/recovery-utils";
+import { clearAllAppData } from "@/lib/recovery-utils";
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false);
-  const [persistenceEnabled, setPersistenceEnabled] = useState(true);
 
   useEffect(() => {
     setMounted(true);
-    const success = enablePersistence();
-    setPersistenceEnabled(success);
   }, []);
 
   if (!mounted) {
@@ -46,9 +39,7 @@ export default function HomePage() {
             type="button"
             onClick={() => {
               clearAllAppData();
-              handleServiceWorkerIssues().then(() => {
-                window.location.reload();
-              });
+              window.location.reload();
             }}
             className="mt-4 bg-[hsl(var(--primary))] text-white px-4 py-2 rounded-md"
           >
@@ -79,12 +70,6 @@ export default function HomePage() {
 
             <div className="mt-8 pt-4">
               <div className="memphis-divider"></div>
-              {!persistenceEnabled && (
-                <p className="text-yellow-500 text-center text-sm">
-                  Local storage is disabled. Data won't persist between
-                  sessions.
-                </p>
-              )}
             </div>
           </div>
         </div>

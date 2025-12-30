@@ -1,19 +1,18 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { ChevronDown, ChevronUp, TrendingUp } from "lucide-react"
-import { progressionSchemes } from "@/lib/progression-utils"
-import type { CalculatorHistoryEntry } from "@/lib/stores/types"
-import { hasItems, safeLength } from "@/lib/utils/array-utils"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ChevronDown, ChevronUp, TrendingUp } from "lucide-react";
+import { progressionSchemes } from "@/lib/progression-utils";
+import type { CalculatorHistoryEntry } from "@/lib/stores/types";
 
 interface CalculatorHistoryProps {
-  showHistory: boolean
-  history: CalculatorHistoryEntry[] | undefined
-  calculatedWeights: number[] | undefined
-  onToggleHistory: () => void
-  onClearHistory: () => void
-  onLoadHistoryEntry: (entry: CalculatorHistoryEntry) => void
+  showHistory: boolean;
+  history: CalculatorHistoryEntry[] | undefined;
+  calculatedWeights: number[] | undefined;
+  onToggleHistory: () => void;
+  onClearHistory: () => void;
+  onLoadHistoryEntry: (entry: CalculatorHistoryEntry) => void;
 }
 
 export default function CalculatorHistory({
@@ -25,16 +24,23 @@ export default function CalculatorHistory({
   onLoadHistoryEntry,
 }: CalculatorHistoryProps) {
   // Ensure calculatedWeights is an array, even if it's undefined
-  const safeCalculatedWeights = Array.isArray(calculatedWeights) ? calculatedWeights : []
-  const safeHistory = Array.isArray(history) ? history : []
+  const safeCalculatedWeights = Array.isArray(calculatedWeights)
+    ? calculatedWeights
+    : [];
+  const safeHistory = Array.isArray(history) ? history : [];
 
   // Don't render anything if there are no calculated weights
-  if (!hasItems(safeCalculatedWeights)) return null
+  if (safeCalculatedWeights.length === 0) return null;
 
   return (
     <>
       {/* History toggle button */}
-      <Button variant="ghost" size="lg" onClick={onToggleHistory} className="mt-6 w-full text-base">
+      <Button
+        variant="ghost"
+        size="lg"
+        onClick={onToggleHistory}
+        className="mt-6 w-full text-base"
+      >
         {showHistory ? (
           <>
             <ChevronUp size={18} className="mr-1" />
@@ -53,15 +59,22 @@ export default function CalculatorHistory({
         <div className="mt-6 pt-4 border-t border-gray-700">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-xl font-bold">Recent Calculations</h3>
-            {safeLength(safeHistory) > 0 && (
-              <Button variant="outline" size="sm" onClick={onClearHistory} className="text-sm">
+            {safeHistory.length > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={onClearHistory}
+                className="text-sm"
+              >
                 Clear
               </Button>
             )}
           </div>
 
-          {safeLength(safeHistory) === 0 ? (
-            <p className="text-base text-gray-400">No calculation history yet.</p>
+          {safeHistory.length === 0 ? (
+            <p className="text-base text-gray-400">
+              No calculation history yet.
+            </p>
           ) : (
             <div className="space-y-3 max-h-80 overflow-y-auto">
               {safeHistory.map((entry) => (
@@ -69,7 +82,7 @@ export default function CalculatorHistory({
                   key={entry?.id || Math.random().toString()}
                   className="border border-gray-700 bg-gray-900 hover:bg-gray-800 transition-colors cursor-pointer"
                   onClick={() => {
-                    if (entry) onLoadHistoryEntry(entry)
+                    if (entry) onLoadHistoryEntry(entry);
                   }}
                 >
                   <CardContent className="p-3">
@@ -78,10 +91,13 @@ export default function CalculatorHistory({
                         <TrendingUp size={18} className="mr-1" />
                         <span className="font-bold">1RM</span>
                       </div>
-                      <span className="text-xs text-gray-400">{entry?.date || "Unknown date"}</span>
+                      <span className="text-xs text-gray-400">
+                        {entry?.date || "Unknown date"}
+                      </span>
                     </div>
                     <div className="mt-2 text-lg">
-                      {entry?.sets || 0}×{entry?.reps || 0} @ {entry?.baseWeight || 0}lbs
+                      {entry?.sets || 0}×{entry?.reps || 0} @{" "}
+                      {entry?.baseWeight || 0}lbs
                       {entry?.scheme &&
                         progressionSchemes[entry.scheme] &&
                         ` (${progressionSchemes[entry.scheme].algorithmName})`}
@@ -94,5 +110,5 @@ export default function CalculatorHistory({
         </div>
       )}
     </>
-  )
+  );
 }
