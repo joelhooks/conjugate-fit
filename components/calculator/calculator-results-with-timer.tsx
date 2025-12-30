@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+
 import SimplifiedPlateVisualizer from "../simplified-plate-visualizer";
 import { useCalculatorState } from "@/lib/stores/calculator-store";
 import { hasItems } from "@/lib/utils/array-utils";
@@ -9,6 +10,7 @@ import {
   type TimingPattern,
   TIMING_PATTERNS,
 } from "../timer/rest-interval-selector";
+import SetZoomView from "./set-zoom-view";
 
 interface CalculatorResultsWithTimerProps {
   onReset?: () => void;
@@ -26,6 +28,7 @@ export default function CalculatorResultsWithTimer({
   const [timingPattern, setTimingPattern] = useState<TimingPattern | null>(
     null,
   );
+  const [showZoom, setShowZoom] = useState(false);
 
   // Use a ref to track if we've already set up the 1RM timing
   const oneRmTimingInitialized = useRef(false);
@@ -93,65 +96,90 @@ export default function CalculatorResultsWithTimer({
 
   // Always render the container with a minimum height to prevent layout shift
   return (
-    <div className="mt-8 min-h-[200px]">
-      {hasItems(safeWeights) ? (
-        <div className="grid grid-cols-1 gap-2 mt-4">
-          {safeWeights.map((weight, index) => {
-            // Get percentage display if available
-            const percentageDisplay =
-              percentages && percentages[index]
-                ? ` (${percentages[index]}%)`
-                : "";
-
-            // Get time interval display based on pattern
-            const timeValue = timeIntervals[index];
-            let timeDisplay = null;
-
-            if (showTimer && restInterval && timeValue !== undefined) {
-              if (timingPattern?.id === "1rm") {
-                // Special display for 1RM pattern
-                timeDisplay = index === 0 ? "Start" : `+${timeValue / 60}m`;
-              } else {
-                // Normal time display for other patterns
-                timeDisplay = formatTime(timeValue);
-              }
-            }
-
-            return (
-              <div key={index} className="bg-gray-900 p-2 rounded-lg">
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center">
-                    <span className="text-base font-bold">
-                      Set {index + 1}:
-                    </span>
-                    {timeDisplay && (
-                      <span className="ml-2 text-sm bg-gray-800 px-2 py-1 rounded mono text-[hsl(var(--primary))]">
-                        {timeDisplay}
-                      </span>
-                    )}
-                  </div>
-                  <span className="text-xl font-bold mono">
-                    {weight} lbs
-                    <span className="text-xs text-gray-400 ml-1">
-                      {percentageDisplay}
-                    </span>
-                  </span>
-                </div>
-
-                {/* Simplified plate visualization */}
-                <div className="mt-1 w-full">
-                  <SimplifiedPlateVisualizer weight={weight} />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      ) : (
-        // Empty state placeholder to maintain height
-        <div className="h-[72px] flex items-center justify-center text-gray-500">
-          Enter a weight to see results
-        </div>
+    <>
+      {/* Zoom view modal */}
+      {showZoom && (
+        <SetZoomView
+          weights={safeWeights}
+          percentages={percentages}
+          onClose={() => setShowZoom(false)}
+        />
       )}
-    </div>
+
+      <div className="mt-8 min-h-[200px]">
+        {/* Zoom button */}
+        {hasItems(safeWeights) && (
+          <div className="flex justify-end mb-3">
+            <button
+              type="button"
+              onClick={() => setShowZoom(true)}
+              className="flex items-center gap-2 px-3 py-2 text-sm bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
+            >
+              <span className="text-lg">👴</span>
+              Zoom
+            </button>
+          </div>
+        )}
+
+        {hasItems(safeWeights) ? (
+          <div className="grid grid-cols-1 gap-2">
+            {safeWeights.map((weight, index) => {
+              // Get percentage display if available
+              const percentageDisplay =
+                percentages && percentages[index]
+                  ? ` (${percentages[index]}%)`
+                  : "";
+
+              // Get time interval display based on pattern
+              const timeValue = timeIntervals[index];
+              let timeDisplay = null;
+
+              if (showTimer && restInterval && timeValue !== undefined) {
+                if (timingPattern?.id === "1rm") {
+                  // Special display for 1RM pattern
+                  timeDisplay = index === 0 ? "Start" : `+${timeValue / 60}m`;
+                } else {
+                  // Normal time display for other patterns
+                  timeDisplay = formatTime(timeValue);
+                }
+              }
+
+              return (
+                <div key={index} className="bg-gray-900 p-2 rounded-lg">
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center">
+                      <span className="text-base font-bold">
+                        Set {index + 1}:
+                      </span>
+                      {timeDisplay && (
+                        <span className="ml-2 text-sm bg-gray-800 px-2 py-1 rounded mono text-[hsl(var(--primary))]">
+                          {timeDisplay}
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-xl font-bold mono">
+                      {weight} lbs
+                      <span className="text-xs text-gray-400 ml-1">
+                        {percentageDisplay}
+                      </span>
+                    </span>
+                  </div>
+
+                  {/* Simplified plate visualization */}
+                  <div className="mt-1 w-full">
+                    <SimplifiedPlateVisualizer weight={weight} />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          // Empty state placeholder to maintain height
+          <div className="h-[72px] flex items-center justify-center text-gray-500">
+            Enter a weight to see results
+          </div>
+        )}
+      </div>
+    </>
   );
 }
