@@ -35,8 +35,8 @@ export default function PercentageInputs({
         label="1RM Target Weight (lbs)"
         value={targetWeight}
         onChange={handleChange}
-        placeholder="Enter max weight"
-        inputClassName="h-20 text-center text-4xl border-[hsl(var(--primary))] border-2"
+        placeholder="target weight"
+        inputClassName="h-28 text-center text-5xl leading-[7rem] border-[hsl(var(--primary))] border-2 placeholder:text-2xl"
       />
     </div>
   );

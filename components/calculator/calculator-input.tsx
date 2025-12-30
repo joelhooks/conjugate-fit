@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface CalculatorInputProps {
-  id: string
-  label: string
-  value: string
-  onChange: (value: string) => void
-  placeholder?: string
-  className?: string
-  inputClassName?: string
-  min?: number
-  max?: number
-  step?: number
+  id: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  className?: string;
+  inputClassName?: string;
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
 export default function CalculatorInput({
@@ -29,8 +29,8 @@ export default function CalculatorInput({
   step,
 }: CalculatorInputProps) {
   return (
-    <div className={`space-y-2 ${className}`}>
-      <Label htmlFor={id} className="text-lg font-bold">
+    <div className={`space-y-4 ${className}`}>
+      <Label htmlFor={id} className="text-xl block">
         {label}
       </Label>
       <Input
@@ -42,9 +42,9 @@ export default function CalculatorInput({
         step={step}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className={`bg-gray-900 border-gray-700 text-white text-xl font-bold mono ${inputClassName}`}
+        className={`bg-gray-900 border-gray-700 text-white text-2xl mono ${inputClassName}`}
         placeholder={placeholder}
       />
     </div>
-  )
+  );
 }

@@ -2,32 +2,20 @@
 
 import type React from "react"
 import { ThemeProvider } from "@/components/theme-provider"
-import { Space_Grotesk, Archivo_Black, Space_Mono } from "next/font/google"
+import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
+import { Archivo_Black } from "next/font/google"
 import "./globals.css"
 import ErrorBoundary from "@/components/error-boundary"
 import DebugInfo from "@/components/debug-info"
 import RegisterServiceWorker from "./register-sw"
 import { useState, useEffect } from "react"
 
-// Primary display font - geometric, bold, and distinctive
+// Keep Archivo Black just for the logo
 const archivoBlack = Archivo_Black({
   weight: ["400"],
   subsets: ["latin"],
   variable: "--font-archivo-black",
-})
-
-// Secondary geometric sans-serif for headings and emphasis
-const spaceGrotesk = Space_Grotesk({
-  weight: ["300", "400", "500", "600", "700"],
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
-})
-
-// Monospace font for data, numbers, and technical information
-const spaceMono = Space_Mono({
-  weight: ["400", "700"],
-  subsets: ["latin"],
-  variable: "--font-space-mono",
 })
 
 export default function ClientLayout({
@@ -49,7 +37,7 @@ export default function ClientLayout({
         <meta name="theme-color" content="#000000" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
-      <body className={`${spaceGrotesk.variable} ${archivoBlack.variable} ${spaceMono.variable}`}>
+      <body className={`${GeistSans.variable} ${GeistMono.variable} ${archivoBlack.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ErrorBoundary>
             {children}

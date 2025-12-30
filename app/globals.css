@@ -4,8 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Space Grotesk", sans-serif;
-  --font-mono: "Space Mono", monospace;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
 
   /* Tailwind v4 colors - use hsl() for compatibility with existing code */
   --color-background: hsl(0 0% 2%);
@@ -108,8 +108,6 @@
 
   /* Font variables */
   --font-archivo-black: "Archivo Black", sans-serif;
-  --font-space-grotesk: "Space Grotesk", sans-serif;
-  --font-space-mono: "Space Mono", monospace;
 
   /* Radius */
   --radius: 0px;
@@ -121,29 +119,40 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "Space Grotesk", sans-serif;
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
+    font-weight: 400;
     letter-spacing: -0.01em;
+    line-height: 1.5;
   }
 
-  /* Brutalist Memphis Typography */
+  /* Clean typography - Geist for everything except logo */
   h1,
   h2,
   h3,
   h4,
   .display-text {
-    font-family: "Archivo Black", sans-serif;
-    text-transform: uppercase;
-    letter-spacing: -0.03em;
-    line-height: 0.95;
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
   }
 
-  /* Monospace for numbers and technical information */
+  /* Monospace for numbers */
   .mono,
   .numeric,
   input[type="number"],
   input[type="text"][inputmode="numeric"] {
-    font-family: "Space Mono", monospace;
+    font-family: var(--font-geist-mono), monospace;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  /* Logo font - keep Archivo Black for branding */
+  .logo-text {
+    font-family: "Archivo Black", sans-serif;
+    text-transform: uppercase;
     letter-spacing: -0.03em;
+    line-height: 0.95;
   }
 }
 
@@ -155,29 +164,29 @@ body {
   width: 100%;
 }
 
-/* Typography Scale */
+/* Typography Scale - gym-readable sizes */
 h1 {
-  @apply text-4xl md:text-5xl font-bold;
+  @apply text-4xl md:text-5xl;
   margin-bottom: 0.5em;
 }
 
 h2 {
-  @apply text-3xl md:text-4xl font-bold;
+  @apply text-3xl md:text-4xl;
   margin-bottom: 0.5em;
 }
 
 h3 {
-  @apply text-2xl md:text-3xl font-bold;
+  @apply text-2xl md:text-3xl;
   margin-bottom: 0.5em;
 }
 
 h4 {
-  @apply text-xl md:text-2xl font-bold;
+  @apply text-xl md:text-2xl;
   margin-bottom: 0.5em;
 }
 
 p {
-  @apply text-lg;
+  @apply text-lg md:text-xl;
   margin-bottom: 1em;
 }
 
@@ -205,7 +214,9 @@ p {
   font-family: "Archivo Black", sans-serif;
   letter-spacing: 0.05em;
   transform: skewX(-5deg);
-  transition: transform 0.2s, background-color 0.2s;
+  transition:
+    transform 0.2s,
+    background-color 0.2s;
 }
 
 .btn-brutalist:hover {
@@ -219,11 +230,10 @@ p {
 /* Brutalist input styles */
 .input-brutalist {
   @apply border-2 border-white bg-black text-white font-bold;
-  font-family: "Space Mono", monospace;
+  font-family: var(--font-geist-mono), monospace;
 }
 
-/* Make inputs and buttons larger and more touch-friendly */
-input,
+/* Make buttons touch-friendly */
 button {
   @apply text-lg;
   max-width: 100%;
@@ -368,9 +378,22 @@ main {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: radial-gradient(circle at 10% 20%, hsl(325 100% 60% / 10%) 1px, transparent 1px),
-    radial-gradient(circle at 80% 60%, hsl(190 100% 50% / 10%) 2px, transparent 2px),
-    radial-gradient(circle at 40% 80%, hsl(260 100% 60% / 10%) 1.5px, transparent 1.5px);
+  background-image:
+    radial-gradient(
+      circle at 10% 20%,
+      hsl(325 100% 60% / 10%) 1px,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle at 80% 60%,
+      hsl(190 100% 50% / 10%) 2px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 40% 80%,
+      hsl(260 100% 60% / 10%) 1.5px,
+      transparent 1.5px
+    );
   background-size: 60px 60px;
   z-index: -1;
 }

@@ -137,18 +137,18 @@ export default function PlatePicker() {
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
       <CollapsibleTrigger className="w-full">
-        <div className="flex flex-col gap-2 p-3 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+        <div className="flex flex-col gap-3 p-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium">Available Plates</span>
-              <span className="text-xs text-gray-400">
+            <div className="flex items-center gap-3">
+              <span className="text-xl">Available Plates</span>
+              <span className="text-base text-gray-400">
                 ({selectedPlates.length} selected)
               </span>
             </div>
             {isOpen ? (
-              <ChevronUp className="h-4 w-4 text-gray-400" />
+              <ChevronUp className="h-6 w-6 text-gray-400" />
             ) : (
-              <ChevronDown className="h-4 w-4 text-gray-400" />
+              <ChevronDown className="h-6 w-6 text-gray-400" />
             )}
           </div>
 
