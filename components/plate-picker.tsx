@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, ChevronUp, Minus, Plus, Infinity } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronUp,
+  Minus,
+  Plus,
+  Infinity as InfinityIcon,
+} from "lucide-react";
 import {
   ALL_AVAILABLE_PLATES,
   PLATE_COLORS,
@@ -82,7 +88,7 @@ export default function PlatePicker() {
 
         {/* Left side: small plates on outside, big plates near bar */}
         <div className="flex items-center">
-          {[...sortedPlates].reverse().map((plate, index) => {
+          {[...sortedPlates].reverse().map((plate) => {
             const height = PLATE_HEIGHTS[plate] || 30;
             const thickness = PLATE_THICKNESS[plate] || 12;
             const scaledHeight = Math.max(16, (height / maxHeight) * 32);
@@ -91,7 +97,7 @@ export default function PlatePicker() {
 
             return (
               <div
-                key={`${plate}-${index}`}
+                key={`left-${plate}`}
                 className={`${getPlateColorClass(plate)} border-r border-gray-800/50 flex items-center justify-center relative`}
                 style={{
                   height: `${scaledHeight}px`,
@@ -108,7 +114,7 @@ export default function PlatePicker() {
 
         {/* Right side: big plates near bar, small plates on outside */}
         <div className="flex items-center">
-          {sortedPlates.map((plate, index) => {
+          {sortedPlates.map((plate) => {
             const height = PLATE_HEIGHTS[plate] || 30;
             const thickness = PLATE_THICKNESS[plate] || 12;
             const scaledHeight = Math.max(16, (height / maxHeight) * 32);
@@ -116,7 +122,7 @@ export default function PlatePicker() {
 
             return (
               <div
-                key={`${plate}-mirror-${index}`}
+                key={`right-${plate}`}
                 className={`${getPlateColorClass(plate)} border-l border-gray-800/50 flex items-center justify-center`}
                 style={{
                   height: `${scaledHeight}px`,
@@ -177,6 +183,7 @@ export default function PlatePicker() {
                 >
                   {/* Toggle button area */}
                   <button
+                    type="button"
                     onClick={() => togglePlate(plate)}
                     className="flex items-center gap-2 p-2 hover:bg-gray-600/30 transition-colors"
                   >
@@ -221,7 +228,9 @@ export default function PlatePicker() {
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
+                          aria-hidden="true"
                         >
+                          <title>Selected</title>
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -237,6 +246,7 @@ export default function PlatePicker() {
                   {isSelected && (
                     <div className="flex items-center justify-between px-2 py-1.5 bg-gray-900/50 border-t border-gray-700">
                       <button
+                        type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleQuantityChange(plate, -1);
@@ -247,6 +257,7 @@ export default function PlatePicker() {
                       </button>
 
                       <button
+                        type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           toggleUnlimited(plate);
@@ -258,13 +269,14 @@ export default function PlatePicker() {
                         }`}
                       >
                         {quantity === null ? (
-                          <Infinity className="w-4 h-4 mx-auto" />
+                          <InfinityIcon className="w-4 h-4 mx-auto" />
                         ) : (
                           quantity
                         )}
                       </button>
 
                       <button
+                        type="button"
                         onClick={(e) => {
                           e.stopPropagation();
                           handleQuantityChange(plate, 1);

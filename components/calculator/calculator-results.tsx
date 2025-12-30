@@ -45,7 +45,10 @@ export default function CalculatorResults({ onReset }: CalculatorResultsProps) {
               : "";
 
           return (
-            <div key={index} className="bg-gray-900 p-3 rounded-lg">
+            <div
+              key={`set-${index}-${weight}`}
+              className="bg-gray-900 p-3 rounded-lg"
+            >
               <div className="flex justify-between items-center">
                 <span className="text-lg">Set {index + 1}:</span>
                 <span className="text-2xl mono">
