@@ -196,8 +196,12 @@ export default function SimplifiedPlateVisualizer({
   );
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="flex items-center w-full py-1">{plateVisualization}</div>
+    <div className={`flex flex-col w-full ${hideBar ? "" : "items-center"}`}>
+      <div
+        className={`flex items-center w-full py-1 ${hideBar ? "" : "justify-center"}`}
+      >
+        {plateVisualization}
+      </div>
 
       {shortfall > 0.1 && (
         <div
