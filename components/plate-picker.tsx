@@ -38,8 +38,8 @@ export default function PlatePicker() {
   const handleQuantityChange = (plate: number, delta: number) => {
     const current = getQuantity(plate);
     if (current === null) {
-      // Going from unlimited to a number
-      setPlateQuantity(plate, Math.max(1, delta > 0 ? 2 : 1));
+      // Going from unlimited to a number - start at 1
+      setPlateQuantity(plate, 1);
     } else {
       const newQty = current + delta;
       if (newQty <= 0) {
