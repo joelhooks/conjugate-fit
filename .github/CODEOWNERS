@@ -1,0 +1,12 @@
+# Supply-chain choke points: changes here can run code in CI, alter dependency resolution, or publish/deploy the app.
+.github/workflows/ @joelhooks
+.github/actions/ @joelhooks
+package.json @joelhooks
+pnpm-lock.yaml @joelhooks
+bun.lock @joelhooks
+package-lock.json @joelhooks
+yarn.lock @joelhooks
+.npmrc @joelhooks
+app/ @joelhooks
+components/ @joelhooks
+lib/ @joelhooks
